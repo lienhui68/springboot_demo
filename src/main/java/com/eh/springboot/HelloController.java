@@ -1,16 +1,20 @@
 package com.eh.springboot;
 
+import com.eh.springboot.exception.UserNotExistException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HelloController {
 
     @RequestMapping("/hello")
-    public String hello(Map<String, Object> map) {
-        map.put("hello", "你好");
-        return "success";
+    @ResponseBody
+    public String hello(@RequestParam("user") String user) {
+        if (user.equals("aaa")) {
+            throw new UserNotExistException();
+        }
+        return "Hello World";
     }
 }
